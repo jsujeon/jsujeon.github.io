@@ -8,6 +8,9 @@
 
 <script>
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  if (localStorage.getItem('darkMode') === 'on') {
+    document.documentElement.classList.add('dark-mode');
+  }
 </script>
 
 <!-- For all browsers -->

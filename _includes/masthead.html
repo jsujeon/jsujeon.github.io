@@ -1,16 +1,127 @@
 <div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
-      <nav id="site-nav" class="greedy-nav">
-        <button><div class="navicon"></div></button>
-        <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="#about-me">Homepage</a></li>
-          {% for link in site.data.navigation.main %}
-            <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
-          {% endfor %}
-        </ul>
-        <ul class="hidden-links hidden"></ul>
-      </nav>
+      <div id="site-nav" style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+        <a href="/" class="site-motto">Shaped by experience.</a>
+        <button id="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+          <span id="dark-mode-icon">🌙</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
+
+<style>
+a.site-motto {
+  font-style: italic;
+  font-weight: 50;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.2em;
+}
+a.site-motto:hover {
+  opacity: 0.7;
+}
+html.dark-mode a.site-motto {
+  color: #c9d1d9;
+}
+#dark-mode-toggle {
+  all: unset;
+  cursor: pointer;
+  font-size: 1.4em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 4px;
+  position: static !important;
+  background: none !important;
+  color: inherit !important;
+}
+#dark-mode-toggle:hover {
+  opacity: 0.7;
+}
+html.dark-mode #dark-mode-toggle {
+  color: #c9d1d9 !important;
+}
+
+/* ── Dark Mode ── */
+html.dark-mode,
+html.dark-mode body {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+html.dark-mode body p,
+html.dark-mode body li,
+html.dark-mode body dt,
+html.dark-mode body dd,
+html.dark-mode body h1,
+html.dark-mode body h2,
+html.dark-mode body h3,
+html.dark-mode body h4,
+html.dark-mode body h5,
+html.dark-mode body h6,
+html.dark-mode body strong {
+  color: #c9d1d9;
+}
+html.dark-mode .masthead {
+  background-color: #161b22;
+  border-bottom-color: #30363d;
+}
+html.dark-mode .masthead a,
+html.dark-mode .masthead__menu-item a {
+  color: #c9d1d9;
+}
+html.dark-mode .page__content h1 {
+  border-bottom-color: #30363d;
+}
+html.dark-mode .page__content a {
+  color: #58a6ff;
+}
+html.dark-mode .sidebar,
+html.dark-mode .sidebar.sticky {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+html.dark-mode .author__name,
+html.dark-mode .author__bio,
+html.dark-mode .author__location,
+html.dark-mode .author__employer,
+html.dark-mode .author__urls a,
+html.dark-mode .author__urls-wrapper .btn,
+html.dark-mode .sidebar p,
+html.dark-mode .sidebar li {
+  color: #c9d1d9;
+}
+html.dark-mode .author__urls-wrapper .btn {
+  border-color: #30363d;
+  background-color: #161b22;
+}
+html.dark-mode .author__urls {
+  background-color: #161b22;
+  border-color: #30363d;
+}
+html.dark-mode hr,
+html.dark-mode .border-color {
+  border-color: #30363d;
+}
+html.dark-mode code,
+html.dark-mode pre {
+  background-color: #161b22;
+  color: #c9d1d9;
+}
+</style>
+
+<script>
+function toggleDarkMode() {
+  const isDark = document.documentElement.classList.toggle('dark-mode');
+  document.getElementById('dark-mode-icon').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('darkMode', isDark ? 'on' : 'off');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.documentElement.classList.contains('dark-mode')) {
+    document.getElementById('dark-mode-icon').textContent = '☀️';
+  }
+});
+</script>

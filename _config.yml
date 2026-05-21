@@ -7,7 +7,7 @@
 
 # Site Settings
 title: "Jisu Jeon"
-description: "Personal Page of Jisu Jeon"
+description: "Researcher in Audio & Multimodal AI"
 repository: "jsujeon/jsujeon.github.io"
 google_scholar_stats_use_cdn : true
 
@@ -22,7 +22,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Jisu Jeon"
-  avatar           : "images/profile.png"
+  avatar           : "images/profile2.png"
   bio              : "Incoming Graduate Student"
   location         : "South Korea"
   employer         :

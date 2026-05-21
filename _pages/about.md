@@ -20,15 +20,15 @@ redirect_from:
 # About Me
 
 Hi! I'm **Jisu Jeon**, a researcher based in South Korea.\
-My primary research focuses on **audio language models**, including audio-visual understanding and audio representation learning. I also have a growing interest in multimodal learning, and my interests are not limited to these areas.
+My primary research focuses on **Audio Language Models**, including Audio-Visual understanding and audio representation learning. \
+I also have a growing interest in multimodal learning, and my interests are not limited to these areas.
 
 <!-- 
 # 🔥 News
 - *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
 - *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
 
-# 📝 Publications 
-<span style="font-size: 0.85em; color: gray;">* First Author</span>
+# 📝 Publications
 
 <div class='paper-box'>
   <div class='paper-box-image'>
@@ -57,6 +57,8 @@ My primary research focuses on **audio language models**, including audio-visual
 </div>
 </div>
 
+<span style="font-size: 0.82em; color: gray;">* First Author</span>
+
 ### Contributing Author
  
 - NAVER Cloud HyperCLOVA X Team, *"HyperCLOVA X 8B Omni"*, arXiv, 2026.
@@ -65,7 +67,7 @@ My primary research focuses on **audio language models**, including audio-visual
 
 # 🏢 Internships
  
-**NAVER Cloud, Foundation Research Team** , Seongnam, Republic of Korea  
+**NAVER Cloud, Foundation Research Team**, Seongnam, Republic of Korea  
 *Research Intern* , Sep. 2025 – Mar. 2026
 - Researched LALM-as-Judge paradigm for audio quality evaluation, focusing on temporal reasoning and cross-modal bias.
 - Built a large-scale audio instruction dataset (2,700+ hours, 14 datasets) for Omni-modal training.
@@ -80,12 +82,12 @@ Advisor: Prof. Tae-Hyun Oh
 
 # 🎓 Education
  
-**Hongik University** , Seoul, Republic of Korea  
-*B.S. in Computer Engineering* , Mar. 2021 – Feb. 2026  
+**Hongik University**, Seoul, Republic of Korea  
+*B.S. in Computer Engineering*, Mar. 2021 – Feb. 2026  
 
 # 🏫 Teaching Experience
  
-**NAVER Boostcourse Study Coach** , Aug. 2025 – Mar. 2026
+**NAVER Boostcourse Study Coach**, Aug. 2025 – Mar. 2026
 - Mentored non-major learners through assignment feedback, Q&A support, and learning engagement facilitation.
 
 **Google Developer Student Club Hongik, AI Mentor** , Sep. 2023 – Dec. 2024
