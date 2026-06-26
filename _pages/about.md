@@ -39,7 +39,7 @@ I also have a growing interest in multimodal learning, and my interests are not 
  
 **<U>Jisu Jeon*</U>**, Seungyeon Jwa, Joosung Lee, Jinhyeon Kim, Woojin Chung, Hwiyeol Jo, Jeonghoon Kim, Jonghyun Choi, Soyoon Kim
  
-*Interspeech 2026 submitted*
+*Interspeech 2026 submitted* \| [![arXiv](https://img.shields.io/badge/arXiv-2606.24648-b31b1b.svg)](https://arxiv.org/abs/2606.24648)
  
 </div>
 </div>
