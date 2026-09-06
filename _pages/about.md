@@ -19,7 +19,7 @@ redirect_from:
 
 # About Me
 
-Hi! I'm **Jisu Jeon**, a researcher based in South Korea.\
+Hi! I'm **Jisu Jeon**, a Joint M.S. & Ph.D. student at [LAAL Lab](https://snu-laal.com/) in the Graduate School of Data Science at Seoul National University, supervised by [Prof. Taesup Kim](https://scholar.google.com/citations?user=7V7yNeoAAAAJ&hl=en).\
 My primary research focuses on **Audio Language Models**, including Audio-Visual understanding and audio representation learning. \
 I also have a growing interest in multimodal learning, and my interests are not limited to these areas.
 
@@ -82,6 +82,9 @@ Advisor: Prof. Tae-Hyun Oh
 
 # 🎓 Education
  
+**Seoul National University**, Seoul, Republic of Korea  
+*Joint M.S. & Ph.D. in Data Science*, Sep. 2026 – Present  
+
 **Hongik University**, Seoul, Republic of Korea  
 *B.S. in Computer Engineering*, Mar. 2021 – Feb. 2026  
 
