@@ -231,7 +231,7 @@
 
           <!-- Venue -->
           <div class="mb-3 mt-1">
-            <span style="font-size:1rem; color:#444; font-family:'Google Sans',sans-serif; font-weight:500;">Interspeech 2026</span>
+            <span style="font-size:1.4rem; color:#444; font-family:'Google Sans',sans-serif; font-weight:500;">Interspeech 2026</span>
           </div>
 
           <!-- Authors -->
@@ -448,7 +448,13 @@
       <div class="column is-half">
         <h3 class="title is-5">Dataset Composition</h3>
         <div class="table-container">
-          <table class="table is-bordered is-striped is-hoverable is-fullwidth result-table">
+          <table class="table is-bordered is-striped is-hoverable is-fullwidth result-table" style="table-layout:fixed;">
+            <colgroup>
+              <col style="width:40%">
+              <col style="width:20%">
+              <col style="width:20%">
+              <col style="width:20%">
+            </colgroup>
             <thead>
               <tr>
                 <th>Criterion</th>
@@ -498,8 +504,11 @@
           </table>
         </div>
         <p class="footnote">
-          Data sourced from Expresso, Sonos Voice Control Bias Assessment, LibriTTS, and EARS.
-          Only official test splits used to minimize pretraining contamination.
+          Only official test splits used to minimize pretraining contamination. Source datasets:
+          <a href="https://github.com/facebookresearch/textlesslib/tree/main/examples/expresso/dataset" target="_blank">Expresso</a> (Emphasis, Style),
+          <a href="https://github.com/sonos/svc-demographic-bias-assessment" target="_blank">SVC Bias Assessment</a> (Age, Gender),
+          <a href="https://www.openslr.org/60/" target="_blank">LibriTTS</a> (Gender),
+          <a href="https://github.com/facebookresearch/ears_dataset" target="_blank">EARS</a> (Rate).
         </p>
       </div>
     </div>
@@ -598,26 +607,25 @@
     <!-- Overall performance table -->
     <h3 class="title is-5 mt-4">Overall Accuracy (%)</h3>
     <div class="table-container">
-      <table class="table is-bordered is-hoverable is-fullwidth result-table">
+      <table class="table is-bordered is-hoverable is-fullwidth result-table" style="table-layout:fixed;">
+        <colgroup>
+          <col style="width:28%">
+          <col style="width:12%">
+          <col style="width:12%">
+          <col style="width:12%">
+          <col style="width:12%">
+          <col style="width:12%">
+          <col style="width:12%">
+        </colgroup>
         <thead>
           <tr>
             <th>Model</th>
-            <th class="has-text-centered">
-              <span class="criterion-tag tag-style">Style</span>
-            </th>
-            <th class="has-text-centered">
-              <span class="criterion-tag tag-rate">Rate</span>
-            </th>
-            <th class="has-text-centered">
-              <span class="criterion-tag tag-emphasis">Emphasis</span>
-            </th>
-            <th class="has-text-centered">
-              <span class="criterion-tag tag-age">Age</span>
-            </th>
-            <th class="has-text-centered">
-              <span class="criterion-tag tag-gender">Gender</span>
-            </th>
-            <th class="has-text-centered"><strong>Avg.</strong></th>
+            <th class="has-text-centered">Style</th>
+            <th class="has-text-centered">Rate</th>
+            <th class="has-text-centered">Emphasis</th>
+            <th class="has-text-centered">Age</th>
+            <th class="has-text-centered">Gender</th>
+            <th class="has-text-centered">Avg.</th>
           </tr>
         </thead>
         <tbody>
