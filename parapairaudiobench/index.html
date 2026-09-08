@@ -104,18 +104,36 @@
     }
 
     .finding-box {
-      border-left: 4px solid #3273dc;
-      padding: 1rem 1.5rem;
-      background-color: #f8f9ff;
-      margin-bottom: 1.5rem;
-      border-radius: 0 6px 6px 0;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      position: relative;
+    }
+
+    .finding-box .finding-num {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #e8eef8;
+      line-height: 1;
+      font-family: 'Google Sans', sans-serif;
+      position: absolute;
+      top: 0.8rem;
+      right: 1rem;
+      user-select: none;
     }
 
     .finding-box .finding-title {
       font-weight: 700;
-      font-size: 1.1rem;
-      color: #3273dc;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: #1a1a2e;
+      margin-bottom: 0.6rem;
+    }
+
+    @media (max-width: 768px) {
+      .finding-grid { grid-template-columns: 1fr; }
+      .result-table { font-size: 0.78rem; }
+      .result-table th, .result-table td { padding: 0.4rem 0.3rem; }
     }
 
     .criterion-tag {
@@ -325,7 +343,7 @@
     <div class="hero-body">
 
       <video autoplay muted loop playsinline width="100%"
-             style="border-radius: 10px;">
+             style="display: block; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
         <source src="static/videos/teaser.mp4" type="video/mp4">
       </video>
 
@@ -610,8 +628,8 @@
 
     <!-- Overall performance table -->
     <h3 class="title is-5 mt-4">Overall Accuracy (%)</h3>
-    <div class="table-container">
-      <table class="table is-bordered is-hoverable is-fullwidth result-table" style="table-layout:fixed;">
+    <div class="table-container" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+      <table class="table is-bordered is-hoverable is-fullwidth result-table" style="table-layout:fixed; min-width: 480px;">
         <colgroup>
           <col style="width:28%">
           <col style="width:12%">
@@ -706,10 +724,8 @@
     <div class="finding-grid">
 
       <div class="finding-box">
-        <div class="finding-title">
-          <span class="icon"><i class="fas fa-triangle-exclamation"></i></span>
-          Performance Gap
-        </div>
+        <div class="finding-num">01</div>
+        <div class="finding-title">Performance Gap</div>
         <p>
           Even the best model (Gemini 2.5 Flash) falls <strong>17.7%p below humans</strong> on average;
           the overall gap across models reaches <strong>32%p</strong>.
@@ -720,10 +736,8 @@
       </div>
 
       <div class="finding-box">
-        <div class="finding-title">
-          <span class="icon"><i class="fas fa-chart-line"></i></span>
-          Calibration Failure on Tie Cases
-        </div>
+        <div class="finding-num">02</div>
+        <div class="finding-title">Calibration Failure on Tie Cases</div>
         <p>
           Models systematically force a preference instead of abstaining.
           Gemini drops from <strong>82.3% → 19.3%</strong> (Non-Tie → Tie) on Emphasis;
@@ -734,10 +748,8 @@
       </div>
 
       <div class="finding-box">
-        <div class="finding-title">
-          <span class="icon"><i class="fas fa-arrows-left-right"></i></span>
-          Style vs. Emphasis Reversal
-        </div>
+        <div class="finding-num">03</div>
+        <div class="finding-title">Style vs. Emphasis Reversal</div>
         <p>
           For <strong>Style</strong>, models over-rely on text: Gemini drops 47.2%p from same- to
           cross-transcript (83.8% → 36.6%), while humans stay stable (86% → 85%).
@@ -747,15 +759,13 @@
       </div>
 
       <div class="finding-box">
-        <div class="finding-title">
-          <span class="icon"><i class="fas fa-sort"></i></span>
-          Positional Bias
-        </div>
+        <div class="finding-num">04</div>
+        <div class="finding-title">Positional Bias</div>
         <p>
           All models show systematic input-order preference.
           SpeechJudge has the largest Acc@A − Acc@B gap at <strong>29.4%p</strong>, always favoring
           position B. Qwen2.5-Omni consistently favors position A across all criteria.
-          Model ranking by accuracy, consistency, and ConsistentAcc is identical, 
+          Model ranking by accuracy, consistency, and ConsistentAcc is identical,
           Gemini leads and SpeechJudge trails on all three.
         </p>
       </div>
