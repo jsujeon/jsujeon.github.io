@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ParaPairAudioBench: Paralinguistic Pairwise Audio Benchmark for LALM-as-a-Judge. Accepted at Interspeech 2026.">
+  <meta name="keywords" content="audio evaluation, large audio language models, paralinguistics, speech, benchmark, pairwise, LALM-as-a-Judge">
+  <meta name="author" content="Jisu Jeon">
+
+  <title>ParaPairAudioBench</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ParaPairAudioBench: Paralinguistic Pairwise Audio Benchmark for LALM-as-a-Judge">
+  <meta property="og:description" content="A diagnostic pairwise benchmark with 5,175 audio pairs across five paralinguistic dimensions for evaluating Large Audio-Language Models.">
+  <meta property="og:type" content="website">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    .hero.is-light {
+      background-color: #f5f5f5;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors a {
+      color: #3273dc;
+      text-decoration: none;
+    }
+
+    .publication-authors a:hover {
+      color: #3273dc;
+      text-decoration: underline;
+    }
+
+    .author-block {
+      display: inline-block;
+    }
+
+    .link-block a {
+      font-size: 1rem;
+    }
+
+    .teaser-section {
+      padding: 3rem 0;
+    }
+
+    .section-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .tag.is-venue {
+      background-color: #3273dc;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.6em 1.2em;
+    }
+
+    .result-table th {
+      background-color: #f0f4ff;
+      font-weight: 600;
+    }
+
+    .result-table td.best {
+      font-weight: 700;
+      color: #3273dc;
+    }
+
+    .result-table td.human {
+      background-color: #f5f5f5;
+      font-style: italic;
+    }
+
+    .bibtex-code {
+      background-color: #f5f5f5;
+      border-radius: 6px;
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      text-align: left;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .finding-box {
+      border-left: 4px solid #3273dc;
+      padding: 1rem 1.5rem;
+      background-color: #f8f9ff;
+      margin-bottom: 1.5rem;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .finding-box .finding-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #3273dc;
+      margin-bottom: 0.5rem;
+    }
+
+    .criterion-tag {
+      display: inline-block;
+      border-radius: 4px;
+      padding: 0.2em 0.7em;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin: 0.2em;
+    }
+
+    .tag-style    { background-color: #e8d5ff; color: #6b21a8; }
+    .tag-rate     { background-color: #d5f0ff; color: #1e40af; }
+    .tag-emphasis { background-color: #d5ffe8; color: #166534; }
+    .tag-age      { background-color: #fff0d5; color: #92400e; }
+    .tag-gender   { background-color: #ffd5e8; color: #9d174d; }
+
+    .stat-box {
+      text-align: center;
+      padding: 1.4rem 1rem;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 2px 12px rgba(50,115,220,0.10);
+      border: 1px solid #e8eef8;
+      transition: transform 0.15s;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-3px);
+    }
+
+    .stat-box .stat-icon {
+      font-size: 1.5rem;
+      color: #3273dc;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-box .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      font-family: 'Google Sans', sans-serif;
+      line-height: 1.1;
+    }
+
+    .stat-box .stat-label {
+      font-size: 0.82rem;
+      color: #888;
+      margin-top: 0.35rem;
+      line-height: 1.3;
+    }
+
+    .video-placeholder {
+      background: #1a1a2e;
+      border-radius: 10px;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 1rem;
+    }
+
+    footer.footer {
+      padding: 2rem 1.5rem;
+      background-color: #fafafa;
+      border-top: 1px solid #eee;
+    }
+
+    .footnote {
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .gap-highlight {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #e53e3e;
+    }
+
+    .cell-green { background-color: rgb(204,255,204); }
+    .cell-pink  { background-color: rgb(255,204,204); }
+
+    .finding-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .finding-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Hero ───────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <!-- Title -->
+          <h1 class="title is-2 publication-title">
+            ParaPairAudioBench: Paralinguistic Pairwise Audio Benchmark for LALM-as-a-Judge
+          </h1>
+
+          <!-- Venue -->
+          <div class="mb-3 mt-1">
+            <span style="font-size:1rem; color:#444; font-family:'Google Sans',sans-serif; font-weight:500;">Interspeech 2026</span>
+          </div>
+
+          <!-- Authors -->
+          <div class="is-size-5 publication-authors mt-4">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?pli=1&authuser=1&user=b3T34EsAAAAJ" target="_blank">Jisu Jeon</a><sup>1</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=YEpqYd8AAAAJ&hl=ko&authuser=1" target="_blank">Seungyeon Jwa</a><sup>2</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=97I4jiEAAAAJ&hl=ko&authuser=1" target="_blank">Joosung Lee</a><sup>3</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              Jinhyeon Kim<sup>3</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=ko&authuser=1&user=dH3aWj4AAAAJ" target="_blank">Woojin Chung</a><sup>4</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=hFSHr0gAAAAJ&hl=ko&authuser=1" target="_blank">Hwiyeol Jo</a><sup>3</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=IUXo_qcAAAAJ&hl=ko&authuser=1" target="_blank">Jeonghoon Kim</a><sup>3,4</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=uiGWnm4AAAAJ&hl=ko&authuser=1" target="_blank">Jonghyun Choi</a><sup>2</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=BENaSLgAAAAJ&hl=ko&authuser=1" target="_blank">Soyoon Kim</a><sup>3†</sup>
+            </span>
+          </div>
+
+          <!-- Affiliations -->
+          <div class="is-size-6 mt-2" style="color: #555;">
+            <sup>1</sup>Hongik University &nbsp;
+            <sup>2</sup>Seoul National University &nbsp;
+            <sup>3</sup>NAVER Cloud &nbsp;
+            <sup>4</sup>KAIST
+          </div>
+          <div class="is-size-7 mt-1 footnote">
+            <sup>†</sup>Corresponding author
+          </div>
+
+          <!-- Links -->
+          <div class="column has-text-centered mt-4">
+            <div class="publication-links link-block">
+
+              <!-- arXiv -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2606.24648" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Paper (placeholder until camera-ready) -->
+              <!-- <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+
+              <!-- Dataset & Code -->
+              <span class="link-block">
+                <a href="https://github.com/jsujeon/ParaPairAudioBench" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Dataset &amp; Code</span>
+                </a>
+              </span>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Teaser Video ─────────────────────────────────────────────────────── -->
+<section class="hero teaser-section">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+
+      <video autoplay muted loop playsinline width="100%"
+             style="border-radius: 10px;">
+        <source src="static/videos/teaser.mp4" type="video/mp4">
+      </video>
+
+      <h2 class="subtitle has-text-centered mt-4" style="font-size: 1.1rem; color: #444;">
+        ParaPairAudioBench is the first pairwise benchmark designed to expose the fine-grained
+        paralinguistic evaluation gaps of Large Audio-Language Models (LALMs) serving as judges.
+      </h2>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Stats ────────────────────────────────────────────────────────────── -->
+<section class="section" style="padding-top: 1.5rem; padding-bottom: 1.5rem; background: #f9f9f9;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered is-multiline" style="align-items: stretch;">
+
+      <div class="column is-one-fifth has-text-centered">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-headphones-alt"></i></div>
+          <div class="stat-num">5,175</div>
+          <div class="stat-label">Audio Pairs</div>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth has-text-centered">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">Paralinguistic Dimensions</div>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth has-text-centered">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-chart-simple"></i></div>
+          <div class="stat-num">32%p</div>
+          <div class="stat-label">Avg. Gap vs. Humans</div>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth has-text-centered">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-robot"></i></div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">Models Evaluated</div>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth has-text-centered">
+        <div class="stat-box">
+          <div class="stat-icon"><i class="fas fa-database"></i></div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Public Corpora</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Abstract ─────────────────────────────────────────────────────────── -->
+<section class="section" style="background-color: #f9f9f9;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-4 has-text-centered section-title">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Large Audio-Language Models (LALMs) are increasingly used as automatic judges for evaluating
+            generated speech, yet existing benchmarks focus predominantly on overall naturalness while
+            neglecting fine-grained paralinguistic qualities. We introduce <strong>ParaPairAudioBench</strong>,
+            a diagnostic pairwise benchmark containing <strong>5,175 audio pairs</strong> spanning five
+            paralinguistic dimensions: <em>Style</em>, <em>Rate</em>, <em>Emphasis</em>, <em>Age</em>,
+            and <em>Gender</em>.
+          </p>
+          <p>
+            Beyond binary preference, our benchmark incorporates <strong>tie conditions</strong> to assess
+            whether models can appropriately abstain under ambiguity, and distinguishes
+            <strong>same-transcript</strong> from <strong>cross-transcript</strong> pairs to isolate acoustic
+            reliance from lexical shortcuts. Experiments across commercial and open-source LALMs reveal that
+            even the strongest model, Gemini 2.5 Flash, falls <strong>17.7%p below human performance</strong>
+            on average, with current models lagging by up to <strong>32%p</strong> overall. We further
+            uncover systematic calibration failures in tie cases and asymmetric transcript-dependency patterns,
+            highlighting critical reliability gaps in current LALM judges.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Benchmark Design ──────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-4 has-text-centered section-title">Benchmark Design</h2>
+
+    <div class="columns is-centered is-vcentered">
+      <div class="column is-half">
+        <h3 class="title is-5">Five Paralinguistic Dimensions</h3>
+        <p class="mb-4">
+          We evaluate models across two categories of paralinguistic attributes:
+        </p>
+        <p class="mb-2">
+          <strong>Static speaker characteristics</strong>: determined by vocal tract physiology:
+        </p>
+        <p class="mb-3">
+          <span class="criterion-tag tag-age">Age</span>
+          <span class="criterion-tag tag-gender">Gender</span>
+        </p>
+        <p class="mb-2">
+          <strong>Dynamic prosodic variations</strong>: controllable expressive dimensions:
+        </p>
+        <p class="mb-3">
+          <span class="criterion-tag tag-rate">Rate</span>
+          <span class="criterion-tag tag-emphasis">Emphasis</span>
+          <span class="criterion-tag tag-style">Style</span>
+        </p>
+        <p>
+          Each criterion captures a distinct aspect of paralinguistic speech quality,
+          enabling multi-dimensional, criterion-specific diagnosis of LALM judges.
+        </p>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-5">Dataset Composition</h3>
+        <div class="table-container">
+          <table class="table is-bordered is-striped is-hoverable is-fullwidth result-table">
+            <thead>
+              <tr>
+                <th>Criterion</th>
+                <th class="has-text-centered">Tie</th>
+                <th class="has-text-centered">Non-Tie</th>
+                <th class="has-text-centered">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="criterion-tag tag-style">Style</span></td>
+                <td class="has-text-centered">720</td>
+                <td class="has-text-centered">720</td>
+                <td class="has-text-centered"><strong>1,440</strong></td>
+              </tr>
+              <tr>
+                <td><span class="criterion-tag tag-rate">Rate</span></td>
+                <td class="has-text-centered">N/A</td>
+                <td class="has-text-centered">375</td>
+                <td class="has-text-centered"><strong>375</strong></td>
+              </tr>
+              <tr>
+                <td><span class="criterion-tag tag-emphasis">Emphasis</span></td>
+                <td class="has-text-centered">445</td>
+                <td class="has-text-centered">415</td>
+                <td class="has-text-centered"><strong>860</strong></td>
+              </tr>
+              <tr>
+                <td><span class="criterion-tag tag-age">Age</span></td>
+                <td class="has-text-centered">750</td>
+                <td class="has-text-centered">750</td>
+                <td class="has-text-centered"><strong>1,500</strong></td>
+              </tr>
+              <tr>
+                <td><span class="criterion-tag tag-gender">Gender</span></td>
+                <td class="has-text-centered">500</td>
+                <td class="has-text-centered">500</td>
+                <td class="has-text-centered"><strong>1,000</strong></td>
+              </tr>
+              <tr style="background-color: #f0f4ff;">
+                <td><strong>Total</strong></td>
+                <td class="has-text-centered"><strong>2,415</strong></td>
+                <td class="has-text-centered"><strong>2,760</strong></td>
+                <td class="has-text-centered"><strong>5,175</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote">
+          Data sourced from Expresso, Sonos Voice Control Bias Assessment, LibriTTS, and EARS.
+          Only official test splits used to minimize pretraining contamination.
+        </p>
+      </div>
+    </div>
+
+    <!-- Design Principles -->
+    <div class="mt-5">
+      <h3 class="title is-5 mb-4">Key Design Principles</h3>
+      <div class="columns">
+        <div class="column">
+          <div class="box" style="height: 100%;">
+            <p class="has-text-weight-bold mb-2 is-size-5">
+              <span class="icon has-text-info"><i class="fas fa-balance-scale"></i></span>
+              Tie Conditions
+            </p>
+            <p class="mb-3">
+              Each instance allows three decisions. Tie cases include "Both Good" (both satisfy the criterion) and "Both Bad" (neither does), exposing whether models can <em>abstain</em> under ambiguity.
+            </p>
+            <!-- Example -->
+            <div style="background:#f4f8ff; border-radius:8px; padding:0.9rem 1rem; font-size:0.9rem;">
+              <p class="mb-2" style="color:#555;">
+                <i class="fas fa-headphones" style="color:#3273dc;"></i>
+                &nbsp;<strong>Instruction:</strong> Which audio clip better expresses the <em>"happy"</em> style?
+              </p>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                <div style="flex:1; background:white; border:1px solid #ddd; border-radius:6px; padding:0.4rem 0.6rem; font-size:0.85rem;">
+                  <span style="color:#888; font-size:0.75rem;">Audio A</span><br>
+                  "She waved goodbye." <span style="color:#7b5ea7;">😕 confused</span>
+                </div>
+                <div style="flex:1; background:white; border:1px solid #ddd; border-radius:6px; padding:0.4rem 0.6rem; font-size:0.85rem;">
+                  <span style="color:#888; font-size:0.75rem;">Audio B</span><br>
+                  "She waved goodbye." <span style="color:#5577aa;">🤫 whisper</span>
+                </div>
+              </div>
+              <p style="color:#555; font-size:0.85rem; margin-bottom:0.5rem;">Neither sounds happy. Correct answer:</p>
+              <div style="display:flex; gap:0.4rem;">
+                <span style="background:#eee; color:#aaa; border-radius:4px; padding:0.2em 0.6em; font-family:monospace; text-decoration:line-through;">[[A]]</span>
+                <span style="background:#eee; color:#aaa; border-radius:4px; padding:0.2em 0.6em; font-family:monospace; text-decoration:line-through;">[[B]]</span>
+                <span style="background:#3273dc; color:white; border-radius:4px; padding:0.2em 0.6em; font-family:monospace; font-weight:700;">[[Tie]] ✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="box" style="height: 100%;">
+            <p class="has-text-weight-bold mb-2 is-size-5">
+              <span class="icon has-text-success"><i class="fas fa-wave-square"></i></span>
+              Transcript Control
+            </p>
+            <p class="mb-3">
+              Pairs are split between <strong>same-transcript (47%)</strong> and <strong>cross-transcript (53%)</strong> conditions, isolating whether models genuinely process acoustics or exploit lexical shortcuts.
+            </p>
+            <!-- Example -->
+            <div style="background:#f4fff8; border-radius:8px; padding:0.9rem 1rem; font-size:0.9rem;">
+              <p class="mb-2" style="color:#555;">
+                <i class="fas fa-headphones" style="color:#257942;"></i>
+                &nbsp;<strong>Instruction:</strong> Which audio clip better expresses the <em>"happy"</em> style?
+              </p>
+              <!-- Same transcript -->
+              <p style="color:#257942; font-size:0.78rem; font-weight:700; margin-bottom:0.3rem;">SAME TRANSCRIPT</p>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                <div style="flex:1; background:white; border:1px solid #b5e8c7; border-radius:6px; padding:0.4rem 0.6rem; font-size:0.82rem;">
+                  <span style="color:#888; font-size:0.75rem;">Audio A</span><br>
+                  "She waved goodbye." <span style="color:#e05c00;">😞 sad</span>
+                </div>
+                <div style="flex:1; background:white; border:1px solid #b5e8c7; border-radius:6px; padding:0.4rem 0.6rem; font-size:0.82rem;">
+                  <span style="color:#888; font-size:0.75rem;">Audio B</span><br>
+                  "She waved goodbye." <span style="color:#2a7d4f;">😊 happy</span>
+                </div>
+              </div>
+              <!-- Cross transcript -->
+              <p style="color:#257942; font-size:0.78rem; font-weight:700; margin-bottom:0.3rem;">CROSS TRANSCRIPT</p>
+              <div style="display:flex; gap:0.5rem;">
+                <div style="flex:1; background:white; border:1px solid #b5e8c7; border-radius:6px; padding:0.4rem 0.6rem; font-size:0.82rem;">
+                  <span style="color:#888; font-size:0.75rem;">Audio A</span><br>
+                  "She waved goodbye." <span style="color:#e05c00;">😞 sad</span>
+                </div>
+                <div style="flex:1; background:white; border:1px solid #b5e8c7; border-radius:6px; padding:0.4rem 0.6rem; font-size:0.82rem;">
+                  <span style="color:#888; font-size:0.75rem;">Audio B</span><br>
+                  "The sun is shining." <span style="color:#2a7d4f;">😊 happy</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── Results ───────────────────────────────────────────────────────────── -->
+<section class="section" style="background-color: #f9f9f9;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-4 has-text-centered section-title">Results</h2>
+
+    <!-- Overall performance table -->
+    <h3 class="title is-5 mt-4">Overall Accuracy (%)</h3>
+    <div class="table-container">
+      <table class="table is-bordered is-hoverable is-fullwidth result-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th class="has-text-centered">
+              <span class="criterion-tag tag-style">Style</span>
+            </th>
+            <th class="has-text-centered">
+              <span class="criterion-tag tag-rate">Rate</span>
+            </th>
+            <th class="has-text-centered">
+              <span class="criterion-tag tag-emphasis">Emphasis</span>
+            </th>
+            <th class="has-text-centered">
+              <span class="criterion-tag tag-age">Age</span>
+            </th>
+            <th class="has-text-centered">
+              <span class="criterion-tag tag-gender">Gender</span>
+            </th>
+            <th class="has-text-centered"><strong>Avg.</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="human">Human<sup>†</sup></td>
+            <td class="has-text-centered human cell-green">85.7</td>
+            <td class="has-text-centered human cell-green">91.0</td>
+            <td class="has-text-centered human cell-green">85.7</td>
+            <td class="has-text-centered human cell-green">52.7</td>
+            <td class="has-text-centered human cell-green">80.7</td>
+            <td class="has-text-centered human">79.2</td>
+          </tr>
+          <tr>
+            <td>Gemini 2.5 Flash</td>
+            <td class="has-text-centered cell-green"><strong>48.5</strong></td>
+            <td class="has-text-centered cell-green"><strong>88.9</strong></td>
+            <td class="has-text-centered cell-green"><strong>49.7</strong></td>
+            <td class="has-text-centered cell-green"><strong><u>56.5</u></strong></td>
+            <td class="has-text-centered cell-green"><strong>64.2</strong></td>
+            <td class="has-text-centered"><strong>61.5</strong></td>
+          </tr>
+          <tr>
+            <td>GPT-4o Audio</td>
+            <td class="has-text-centered cell-green">36.4</td>
+            <td class="has-text-centered cell-green">77.6</td>
+            <td class="has-text-centered cell-green">43.8</td>
+            <td class="has-text-centered">34.9</td>
+            <td class="has-text-centered cell-green">39.3</td>
+            <td class="has-text-centered">46.4</td>
+          </tr>
+          <tr>
+            <td>Kimi-Audio-7B</td>
+            <td class="has-text-centered cell-green">45.9</td>
+            <td class="has-text-centered cell-green">76.0</td>
+            <td class="has-text-centered cell-green">42.9</td>
+            <td class="has-text-centered cell-pink">27.5</td>
+            <td class="has-text-centered cell-green">58.6</td>
+            <td class="has-text-centered">50.2</td>
+          </tr>
+          <tr>
+            <td>Qwen2.5-Omni-7B</td>
+            <td class="has-text-centered">35.8</td>
+            <td class="has-text-centered cell-green">61.9</td>
+            <td class="has-text-centered cell-green">36.7</td>
+            <td class="has-text-centered cell-green">38.1</td>
+            <td class="has-text-centered cell-green">47.4</td>
+            <td class="has-text-centered">44.0</td>
+          </tr>
+          <tr>
+            <td>SpeechJudge-7B</td>
+            <td class="has-text-centered">32.6</td>
+            <td class="has-text-centered">48.0</td>
+            <td class="has-text-centered">32.9</td>
+            <td class="has-text-centered cell-pink">25.8</td>
+            <td class="has-text-centered cell-pink">29.9</td>
+            <td class="has-text-centered">33.8</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="footnote mb-5">
+      <sup>†</sup>Human: n=50 per criterion, 6 raters (Fleiss' κ = 0.67).
+      <span style="background:rgb(204,255,204); padding: 0 6px; border-radius:3px;">Green</span> / <span style="background:rgb(255,204,204); padding: 0 6px; border-radius:3px;">Pink</span>: above / below chance (z-test, 95% CI).
+      <strong>Bold</strong>: best model per criterion. <u>Underlined</u>: higher than human.
+    </p>
+
+  </div>
+</section>
+
+<!-- ─── Key Findings ──────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-4 has-text-centered section-title">Key Findings</h2>
+    <div class="finding-grid">
+
+      <div class="finding-box">
+        <div class="finding-title">
+          <span class="icon"><i class="fas fa-triangle-exclamation"></i></span>
+          Performance Gap
+        </div>
+        <p>
+          Even the best model (Gemini 2.5 Flash) falls <strong>17.7%p below humans</strong> on average;
+          the overall gap across models reaches <strong>32%p</strong>.
+          Models and humans differ in which criteria are hardest:
+          models struggle most with Style, while humans find Age most difficult (κ = 0.365).
+          Notably, Gemini exceeds human performance on Age by 3.8%p.
+        </p>
+      </div>
+
+      <div class="finding-box">
+        <div class="finding-title">
+          <span class="icon"><i class="fas fa-chart-line"></i></span>
+          Calibration Failure on Tie Cases
+        </div>
+        <p>
+          Models systematically force a preference instead of abstaining.
+          Gemini drops from <strong>82.3% → 19.3%</strong> (Non-Tie → Tie) on Emphasis;
+          GPT-4o Audio collapses from 69.0% → 3.8% on Style.
+          SpeechJudge almost never selects Tie (1.7% on Style).
+          Humans maintain <strong>75%+ Tie accuracy</strong> across criteria.
+        </p>
+      </div>
+
+      <div class="finding-box">
+        <div class="finding-title">
+          <span class="icon"><i class="fas fa-arrows-left-right"></i></span>
+          Style vs. Emphasis Reversal
+        </div>
+        <p>
+          For <strong>Style</strong>, models over-rely on text: Gemini drops 47.2%p from same- to
+          cross-transcript (83.8% → 36.6%), while humans stay stable (86% → 85%).
+          For <strong>Emphasis</strong>, the pattern <em>reverses</em>, cross-transcript pairs
+          actually help models (Gemini: 43.5% → 56.4%), suggesting limited local prosodic sensitivity.
+        </p>
+      </div>
+
+      <div class="finding-box">
+        <div class="finding-title">
+          <span class="icon"><i class="fas fa-sort"></i></span>
+          Positional Bias
+        </div>
+        <p>
+          All models show systematic input-order preference.
+          SpeechJudge has the largest Acc@A − Acc@B gap at <strong>29.4%p</strong>, always favoring
+          position B. Qwen2.5-Omni consistently favors position A across all criteria.
+          Model ranking by accuracy, consistency, and ConsistentAcc is identical, 
+          Gemini leads and SpeechJudge trails on all three.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Analysis ─────────────────────────────────────────────────────────── -->
+<section class="section" style="background-color: #f9f9f9;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-4 has-text-centered section-title">Analysis</h2>
+
+    <!-- Calibration -->
+    <h3 class="title is-5 mt-2">Calibration: Non-Tie vs. Tie Accuracy</h3>
+    <p class="mb-5">
+      Models that discriminate well in Non-Tie cases frequently collapse on Tie cases.
+      The gap is sharpest for <strong>Emphasis and Style</strong>: Gemini drops from 82.3% to 19.3% on Emphasis, and GPT-4o Audio from 69.0% to 3.8% on Style.
+      In contrast, humans maintain 75%+ Tie accuracy across criteria.
+      On <strong>Age</strong>, open-source models show higher Tie than Non-Tie accuracy, but since Non-Tie is already near chance, this reflects task failure rather than calibration competence.
+    </p>
+
+    <!-- Transcript Influence -->
+    <h3 class="title is-5">Transcript Influence: Acoustic vs. Lexical Reliance</h3>
+    <div class="columns is-vcentered mt-2">
+      <div class="column">
+        <p class="mb-3">
+          <strong>Style</strong>: Models over-rely on text. Gemini drops 47.2%p from same- to cross-transcript (83.8% → 36.6%), while humans stay stable (86% → 85%).
+        </p>
+        <p>
+          <strong>Emphasis</strong>: The pattern reverses. Cross-transcript pairs help models (Gemini: 43.5% → 56.4%), suggesting limited local prosodic sensitivity within identical utterances. Humans again remain stable.
+        </p>
+      </div>
+      <div class="column is-two-fifths">
+        <div class="box has-text-centered" style="background:#f0f4ff;">
+          <p class="is-size-7 mb-2" style="color:#888;">Same to Cross transcript (Δ)</p>
+          <table class="table is-bordered is-narrow is-fullwidth" style="font-size:0.9rem;">
+            <thead>
+              <tr><th>Model</th><th>Style</th><th>Emphasis</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Human</td><td>−0.7%p</td><td>−3.3%p</td></tr>
+              <tr><td>Gemini 2.5 Flash</td><td class="cell-pink">−47.2%p</td><td class="cell-green">+12.9%p</td></tr>
+              <tr><td>GPT-4o Audio</td><td class="cell-pink">−28.5%p</td><td class="cell-green">+18.5%p</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Position Bias -->
+    <h3 class="title is-5 mt-5">Position Bias &amp; Consistency</h3>
+    <p class="mt-2">
+      All models show systematic input-order preference. SpeechJudge has the largest Acc@A vs. Acc@B gap (29.4%p, always favoring B); Qwen2.5-Omni consistently favors position A.
+      Model ranking by accuracy, consistency, and ConsistentAcc is identical across all three metrics.
+    </p>
+
+  </div>
+</section>
+
+<!-- ─── BibTeX ────────────────────────────────────────────────────────────── -->
+<section class="section" style="background-color: #f9f9f9;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-4 has-text-centered section-title">BibTeX</h2>
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <pre class="bibtex-code">@inproceedings{jeon2026parapaireaudiobench,
+  title     = {ParaPairAudioBench: Paralinguistic Pairwise Audio Benchmark for LALM-as-a-Judge},
+  author    = {Jeon, Jisu and Jwa, Seungyeon and Lee, Joosung and Kim, Jinhyeon and
+               Chung, Woojin and Jo, Hwiyeol and Kim, Jeonghoon and Choi, Jonghyun and Kim, Soyoon},
+  booktitle = {Proc. Interspeech},
+  year      = {2026}
+}</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This page was built using the
+        <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">
+          Academic Project Page Template
+        </a>
+        adopted from the
+        <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+        Licensed under
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
